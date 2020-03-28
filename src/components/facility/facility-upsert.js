@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button,Form,FormGroup,Label,Input,FormFeedback} from 'reactstrap';
 import NotifyUser from '../packages/notify-user';
-import { upsertFacilities } from '../utils/lagoon-api-service';
+import { upsertFacilities } from '../utils/api-service';
 
 const UpsertFacility = (props) => {
     const [error,setError] = useState(null);

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Button,Form,FormGroup,Label,Input,FormFeedback} from 'reactstrap';
 import NotifyUser from '../packages/notify-user';
-import { upsertPipelineSystem } from '../utils/lagoon-api-service';
+import { upsertPipelineSystem } from '../utils/api-service';
 
 const UpsertPipelineSystem = (props) => {
     const [error, setError] = useState(null);

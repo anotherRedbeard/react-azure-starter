@@ -16,6 +16,17 @@ export async function getFacilities() {
     return facilities;
 }
 
+export async function getPosts() {
+    var posts = [];
+    console.log('url',config);
+    var url = config.jsonApiUrl + '/posts';
+    var resp = await fetch(url);
+    console.log('getPosts',resp);
+    posts = await resp.json();
+    console.log('getPosts',posts);
+    return posts;
+}
+
 export async function upsertPipelineSystem(system) {
     const requestOptions = {
         method: 'POST',

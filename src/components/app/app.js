@@ -9,7 +9,7 @@ import config from '../utils/config';
 import { UserAgentApplication } from 'msal';
 import { getUserDetails, getUserPhoto, getUserGroups } from '../utils/graph-service';
 import Calendar from '../calendar/calendar';
-import PipelineSystem from '../pipeline-system/pipeline-system';
+import Posts from '../posts/post';
 import Facility from '../facility/facility';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle, faQuestionCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
@@ -164,13 +164,7 @@ class App extends Component {
                   showNotify={this.setNotifyMessage.bind(this)} />
               } />
             <Route exact path="/facility" render={(props) => <Facility {...props} user={this.state.user} isAuthenticated={this.state.isAuthenticated} showNotify={this.setNotifyMessage.bind(this)} />} />
-            <Route exact path="/systems"
-              render={(props) =>
-                <PipelineSystem {...props}
-                  user={this.state.user}
-                  isAuthenticated={this.state.isAuthenticated}
-                  showNotify={this.setNotifyMessage.bind(this)} />
-              } />
+            <Route exact path="/posts" render={(props) => <Posts {...props} user={this.state.user} isAuthenticated={this.state.isAuthenticated} showNotify={this.setNotifyMessage.bind(this)} />} />
           </Container>
         </div>
       </Router>

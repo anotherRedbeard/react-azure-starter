@@ -3,7 +3,7 @@ import {Table,
     ButtonGroup,
     Container } from 'reactstrap';
 import moment from 'moment';
-import { getFacilities, getPipelineSystems } from '../utils/lagoon-api-service';
+import { getFacilities, getPipelineSystems } from '../utils/api-service';
 import Loader from '../packages/loader';
 import ModalForm from '../packages/modal-form';
 import UpsertFacility from './facility-upsert';

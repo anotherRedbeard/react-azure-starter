@@ -3,18 +3,18 @@ import {Table,
         ButtonGroup,
         Container } from 'reactstrap';
 import moment from 'moment';
-import { getPipelineSystems } from '../utils/api-service';
+import { getPosts } from '../utils/api-service';
 import Loader from '../packages/loader';
 import ModalForm from '../packages/modal-form';
-import UpsertPipelineSystem from './pipeline-system-upsert';
+import UpsertPipelineSystem from '../pipeline-system/pipeline-system-upsert';
 
 //Helper function to format Graph date/time
 function formatDateTime(dateTime) {
     return moment.utc(dateTime).local().format('M/D/YY h:mm A');
 }
 
-const PipelineSystem = (props) => {
-    const [systems,setSystems] = useState([]);
+const Posts = (props) => {
+    const [allPosts,setAllPosts] = useState([]);
     const [isLoading,setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -22,9 +22,10 @@ const PipelineSystem = (props) => {
             try {
                 if (props.isAuthenticated) {
                   //Get the user's events
-                  var [systems] = await Promise.all([ getPipelineSystems() ]);
+                  var [posts] = await Promise.all([ getPosts() ]);
+                  console.log('fetchData',posts);
                   //Update the array of events in state
-                  setSystems(systems);
+                  setAllPosts(posts);
                   setIsLoading(false);
                 } else {
                     props.showNotify('danger', 'User not Authenticated', 'Please sign in to view this page')
@@ -37,15 +38,15 @@ const PipelineSystem = (props) => {
         fetchData();
     }, []);
 
-    const editSystem = (system) => {
+    const editPost = (post) => {
       setIsLoading(true);
-      setSystems(systems.map(item => (item.systemId === system.systemId ? system : item)));
+      setAllPosts(allPosts.map(item => (item.id === post.id ? post : item)));
       setIsLoading(false);
     }
 
-    const addSystem = (system) => {
+    const addPost = (post) => {
       setIsLoading(true);
-      setSystems(prevArray => [...prevArray, system]);
+      setAllPosts(prevArray => [...prevArray, post]);
       setIsLoading(false);
     }
 
@@ -53,33 +54,33 @@ const PipelineSystem = (props) => {
 
       if (isLoading) {
         return (
-          <Loader name='Pipeline Systems'/>
+          <Loader name='Posts'/>
         );
       }
 
-      const pipelineSystems = systems.map(system => {
+      const postsToDisplay = allPosts.map(item => {
         return (
-          <tr key={system.systemId}>
-            <td>{system.systemId}</td>
-            <td>{system.systemName}</td>
-            <td>{formatDateTime(system.modifiedTimestamp)}</td>
-            <td>{system.isSystemActive ? 'Yes' : 'No'}</td>
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.title}</td>
+            <td>{item.title}</td>
+            <td>{item.body}</td>
             <td>
               <ButtonGroup>
                 <ModalForm buttonLabel="Edit" 
                   user={props.user}
-                  render={edit => ( <UpsertPipelineSystem system={system} toggleModal={edit.toggleModal} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify}  editSystem={editSystem} />)} />
+                  render={edit => ( <UpsertPipelineSystem system={null} toggleModal={edit.toggleModal} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify}  editPost={editPost} />)} />
               </ButtonGroup>
             </td>
           </tr>
         )
       });
 
-      const nextSystemId = 1+Math.max.apply(Math, systems.map(function(o) { return o.systemId; }));
-      var newSystem = {
-        systemId: nextSystemId,
-        systemName: '',
-        isSystemActive: true
+      const nextId = 1+Math.max.apply(Math, allPosts.map(function(o) { return o.id; }));
+      var newPost = {
+        id: nextId,
+        title: '',
+        body: ''
       };
 
       return (
@@ -88,21 +89,21 @@ const PipelineSystem = (props) => {
             <div className="float-right">
               <ModalForm buttonLabel="Add System" 
                 user={props.user}
-                render={add => ( <UpsertPipelineSystem system={newSystem} toggleModal={add.toggleModal} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify} addSystem={addSystem} />)}/>
+                render={add => ( <UpsertPipelineSystem post={newPost} toggleModal={add.toggleModal} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify} addPost={addPost} />)}/>
             </div>
-            <h3>Pipeline Systems</h3>
+            <h3>Posts</h3>
             <Table>
               <thead>
                 <tr>
-                  <th scope="col">System Id</th>
-                  <th scope="col">System Name</th>
-                  <th scope="col">Last Modified Date</th>
-                  <th scope="col">Is Active?</th>
+                  <th scope="col">Post Id</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Body</th>
+                  <th scope="col">User</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {pipelineSystems}
+                {postsToDisplay}
               </tbody>
             </Table>
           </Container>
@@ -113,4 +114,4 @@ const PipelineSystem = (props) => {
     }
 }
 
-export default PipelineSystem;
+export default Posts;
