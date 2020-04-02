@@ -22,9 +22,9 @@ export default class Welcome extends React.Component {
   render() {
     return (
       <Jumbotron>
-        <h1>Well Management System</h1>
+        <h1>React Azure Started</h1>
         <p className="lead">
-            This app allows you to manage the well/pad/facility/system information in the Lagoon environment
+            This app is a quickstart to get a react app pointed to Azure AD and a CRUD screen pointing to JSONPLaceholder API, <a href='https://jsonplaceholder.typicode.com/'>https://jsonplaceholder.typicode.com/</a>
         </p>
         <WelcomeContent
           isAuthenticated={this.props.isAuthenticated}

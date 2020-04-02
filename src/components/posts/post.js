@@ -3,10 +3,12 @@ import {Table,
         ButtonGroup,
         Container } from 'reactstrap';
 import moment from 'moment';
-import { getPosts } from '../utils/api-service';
+import { getPosts, getUsers } from '../utils/api-service';
 import Loader from '../packages/loader';
 import ModalForm from '../packages/modal-form';
-import UpsertPipelineSystem from '../pipeline-system/pipeline-system-upsert';
+import UpsertPost from './post-upsert';
+import ModalFromButton from '../packages/modal-from-button';
+import { sortArrayByProperty } from '../utils/utils';
 
 //Helper function to format Graph date/time
 function formatDateTime(dateTime) {
@@ -15,6 +17,7 @@ function formatDateTime(dateTime) {
 
 const Posts = (props) => {
     const [allPosts,setAllPosts] = useState([]);
+    const [allUsers,setAllUsers] = useState([]);
     const [isLoading,setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -22,10 +25,10 @@ const Posts = (props) => {
             try {
                 if (props.isAuthenticated) {
                   //Get the user's events
-                  var [posts] = await Promise.all([ getPosts() ]);
-                  console.log('fetchData',posts);
+                  var [posts, users] = await Promise.all([ getPosts(), getUsers() ]);
                   //Update the array of events in state
                   setAllPosts(posts);
+                  setAllUsers(users);
                   setIsLoading(false);
                 } else {
                     props.showNotify('danger', 'User not Authenticated', 'Please sign in to view this page')
@@ -39,15 +42,11 @@ const Posts = (props) => {
     }, []);
 
     const editPost = (post) => {
-      setIsLoading(true);
       setAllPosts(allPosts.map(item => (item.id === post.id ? post : item)));
-      setIsLoading(false);
     }
 
     const addPost = (post) => {
-      setIsLoading(true);
-      setAllPosts(prevArray => [...prevArray, post]);
-      setIsLoading(false);
+      setAllPosts(prevArray => [...prevArray, {...post, userId:post.user.id}]);
     }
 
     if (props.isAuthenticated) {
@@ -58,18 +57,18 @@ const Posts = (props) => {
         );
       }
 
-      const postsToDisplay = allPosts.map(item => {
+      const postsToDisplay = sortArrayByProperty(allPosts,'title').map(item => {
         return (
           <tr key={item.id}>
             <td>{item.id}</td>
             <td>{item.title}</td>
-            <td>{item.title}</td>
             <td>{item.body}</td>
+            <td>{allUsers.find(x => x.id === parseInt(item.userId))?.name}</td>
             <td>
               <ButtonGroup>
                 <ModalForm buttonLabel="Edit" 
                   user={props.user}
-                  render={edit => ( <UpsertPipelineSystem system={null} toggleModal={edit.toggleModal} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify}  editPost={editPost} />)} />
+                  render={edit => ( <UpsertPost post={item} users={allUsers} toggleModal={edit.toggleModal} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify}  editPost={editPost} />)} />
               </ButtonGroup>
             </td>
           </tr>
@@ -80,16 +79,17 @@ const Posts = (props) => {
       var newPost = {
         id: nextId,
         title: '',
-        body: ''
+        body: '',
+        user: allUsers[0]
       };
 
       return (
         <div>
           <Container fluid>
             <div className="float-right">
-              <ModalForm buttonLabel="Add System" 
+              <ModalFromButton buttonLabel="Add System" 
                 user={props.user}
-                render={add => ( <UpsertPipelineSystem post={newPost} toggleModal={add.toggleModal} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify} addPost={addPost} />)}/>
+                render={(modal,toggle) => ( <UpsertPost post={newPost} users={allUsers} toggleModal={toggle} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify} addPost={addPost} />)}/>
             </div>
             <h3>Posts</h3>
             <Table>

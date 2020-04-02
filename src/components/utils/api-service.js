@@ -1,39 +1,28 @@
 import config from './config';
 
-export async function getPipelineSystems() {
-    var systems = [];
-    var url = config.lagoonApiUrl + 'enterprise/pipelinesystem?code=' + config.lagoonApiCode;
-    var resp = await fetch(url);
-    systems = await resp.json();
-    return systems;
-}
-
-export async function getFacilities() {
-    var facilities = [];
-    var url = config.lagoonApiUrl + 'enterprise/facility?code=' + config.lagoonApiCode;
-    var resp = await fetch(url);
-    facilities = await resp.json();
-    return facilities;
-}
-
 export async function getPosts() {
     var posts = [];
-    console.log('url',config);
-    var url = config.jsonApiUrl + '/posts';
+    var url = config.jsonApiUrl + 'posts';
     var resp = await fetch(url);
-    console.log('getPosts',resp);
     posts = await resp.json();
-    console.log('getPosts',posts);
     return posts;
 }
 
-export async function upsertPipelineSystem(system) {
+export async function getUsers() {
+    var users = [];
+    var url = config.jsonApiUrl + 'users';
+    var resp = await fetch(url);
+    users = await resp.json();
+    return users;
+}
+
+export async function createPost(post) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(system)
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(post)
     };
-    var url = config.lagoonApiUrl + 'enterprise/pipelinesystem?code=' + config.lagoonApiCode;
+    var url = config.jsonApiUrl + 'posts';
     return fetch(url, requestOptions)
         .then(async response => {
             if (response.ok) {
@@ -51,13 +40,13 @@ export async function upsertPipelineSystem(system) {
         });
 }
 
-export async function upsertFacilities(facilities) {
+export async function updatePost(post) {
     const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(facilities)
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify(post)
     };
-    var url = config.lagoonApiUrl + 'enterprise/facility?code=' + config.lagoonApiCode;
+    var url = config.jsonApiUrl + 'posts/' + post.id;
     return fetch(url, requestOptions)
         .then(async response => {
             if (response.ok) {

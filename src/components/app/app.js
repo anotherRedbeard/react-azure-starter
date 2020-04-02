@@ -10,7 +10,6 @@ import { UserAgentApplication } from 'msal';
 import { getUserDetails, getUserPhoto, getUserGroups } from '../utils/graph-service';
 import Calendar from '../calendar/calendar';
 import Posts from '../posts/post';
-import Facility from '../facility/facility';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle, faQuestionCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -85,7 +84,10 @@ class App extends Component {
   }
 
   isUserInAdminRole(userRoles) {
-    return userRoles.some(userRole => userRole.id === config.isAdminGroupId);
+    //this is the check for user groups, but it is commented out so we can make the buttons work for this sample, in the event that you use this code,
+    //you will need to create a group for admin access and grant admin consent to the group.read.all scope for the app in azure AD
+    //return userRoles.some(userRole => userRole.id === config.isAdminGroupId);
+    return true;
   }
 
   async getUserProfile() {
@@ -150,21 +152,15 @@ class App extends Component {
             user={this.state.user}/>
           <Container>
             {notify}
-            <Route exact path="/"
-              render={(props) =>
-                <Welcome {...props}
-                  isAuthenticated={this.state.isAuthenticated}
-                  user={this.state.user}
-                  authButtonMethod={this.login.bind(this)} />
-              } />
-            <Route exact path="/calendar"
-              render={(props) =>
-                <Calendar {...props}
-                  isAuthenticated={this.state.isAuthenticated}
-                  showNotify={this.setNotifyMessage.bind(this)} />
-              } />
-            <Route exact path="/facility" render={(props) => <Facility {...props} user={this.state.user} isAuthenticated={this.state.isAuthenticated} showNotify={this.setNotifyMessage.bind(this)} />} />
-            <Route exact path="/posts" render={(props) => <Posts {...props} user={this.state.user} isAuthenticated={this.state.isAuthenticated} showNotify={this.setNotifyMessage.bind(this)} />} />
+            <Route exact path="/" render={(props) => 
+              <Welcome {...props} isAuthenticated={this.state.isAuthenticated} user={this.state.user} authButtonMethod={this.login.bind(this)} /> 
+            } />
+            <Route exact path="/calendar" render={(props) => 
+              <Calendar {...props} isAuthenticated={this.state.isAuthenticated} showNotify={this.setNotifyMessage.bind(this)} /> 
+            } />
+            <Route exact path="/posts" render={(props) => 
+              <Posts {...props} user={this.state.user} isAuthenticated={this.state.isAuthenticated} showNotify={this.setNotifyMessage.bind(this)} />
+            } />
           </Container>
         </div>
       </Router>

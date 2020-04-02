@@ -17,8 +17,10 @@ This is a simple react js hooks starter project that is using Azure AD to authen
     ```text
     // .env.development.local
     REACT_APP_ID={Application (client) ID created above}
+    REACT_APP_AUTHORITY=https://login.microsoftonline.com/{Azure tenant id that will match the tenant you created the app registration in}
     REACT_APP_REDIRECT_URL=http://localhost:3000
-    REACT_APP_API_BASE_URL=https://lws-lagoonapis-fa-sbx.azurewebsites.net/api/
+    REACT_APP_API_BASE_URL=https://jsonplaceholder.typicode.com/
+
     ```
 
 4. Run the following commands
@@ -27,3 +29,11 @@ This is a simple react js hooks starter project that is using Azure AD to authen
     $npm install
     $npm start
     ```
+
+5. Login and start clicking
+
+## Additional Info
+
+This project is using the JSONPlaceHolder API, which can be found here https://jsonplaceholder.typicode.com, to pull in random sample data to play with.  A couple of important things to note about this data source:
+    1. It's read-only.  It will provide fakes for inserts and updates, but you aren't really changing the source.  For example, if you create a new post and then try to edit that post, it will fail since the post you created was just a fake.
+    2. Actually there was only one important thing to note about using this data...

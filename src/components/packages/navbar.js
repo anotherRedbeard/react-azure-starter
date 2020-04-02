@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import {
   Collapse,
@@ -16,7 +16,7 @@ import {
   Button } from 'reactstrap';
 import '@fortawesome/fontawesome-free/css/all.css';
 
-function UserAvatar(props) {
+const UserAvatar = (props) => {
   // If a user avatar is available, return an img tag with the pic
   if (props.user.avatar) {
     return <img
@@ -31,7 +31,7 @@ function UserAvatar(props) {
           style={{width: '32px'}}></i>;
 }
 
-function AuthNavItem(props) {
+const AuthNavItem = (props) => {
   // If authenticated, return a dropdown with the user's info and a
   // sign out button
   if (props.isAuthenticated) {
@@ -63,76 +63,55 @@ function AuthNavItem(props) {
   );
 }
 
-export default class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
+const NavBar = (props) => {
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => {
+    setIsOpen({isOpen: !isOpen});
   }
 
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
-  render() {
-    // Only following nav item if logged in
-    let calendarLink = null;
-    let postsLink = null;
-    let facilityLink = null;
-    if (this.props.isAuthenticated) {
-      calendarLink = (
-        <NavItem>
-          <RouterNavLink to="/calendar" className="nav-link" exact>Calendar</RouterNavLink>
-        </NavItem>
-      );
-      postsLink = (
-        <NavItem>
-          <RouterNavLink to="/posts" className="nav-link" exact>Postss</RouterNavLink>
-        </NavItem>
-      );
-      facilityLink = (
-        <NavItem>
-          <RouterNavLink to="/facility" className="nav-link" exact>Facilities</RouterNavLink>
-        </NavItem>
-      )
-    }
-
-    return (
-      <div>
-        <Navbar color="dark" dark expand="md" fixed="top">
-          <Container>
-            <NavbarBrand href="/">Well Management System</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="mr-auto" navbar>
-                <NavItem>
-                  <RouterNavLink to="/" className="nav-link" exact>Home</RouterNavLink>
-                </NavItem>
-                {calendarLink}
-                {facilityLink}
-                {postsLink}
-              </Nav>
-              <Nav className="justify-content-end" navbar>
-                <NavItem>
-                  <NavLink href="https://developer.microsoft.com/graph/docs/concepts/overview" target="_blank">
-                    <i className="fas fa-external-link-alt mr-1"></i>
-                    Docs
-                  </NavLink>
-                </NavItem>
-                <AuthNavItem
-                  isAuthenticated={this.props.isAuthenticated}
-                  authButtonMethod={this.props.authButtonMethod}
-                  user={this.props.user} />
-              </Nav>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </div>
+  // Only following nav item if logged in
+  let calendarLink = null;
+  let postsLink = null;
+  if (props.isAuthenticated) {
+    calendarLink = (
+      <NavItem>
+        <RouterNavLink to="/calendar" className="nav-link" exact>Calendar</RouterNavLink>
+      </NavItem>
+    );
+    postsLink = (
+      <NavItem>
+        <RouterNavLink to="/posts" className="nav-link" exact>Posts</RouterNavLink>
+      </NavItem>
     );
   }
+
+  return (
+    <div>
+      <Navbar color="dark" dark expand="md" fixed="top">
+        <Container>
+          <NavbarBrand href="/">React Azure Starter</NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="mr-auto" navbar>
+              <NavItem>
+                <RouterNavLink to="/" className="nav-link" exact>Home</RouterNavLink>
+              </NavItem>
+              {calendarLink}
+              {postsLink}
+            </Nav>
+            <Nav className="justify-content-end" navbar>
+              <AuthNavItem
+                isAuthenticated={props.isAuthenticated}
+                authButtonMethod={props.authButtonMethod}
+                user={props.user} />
+            </Nav>
+          </Collapse>
+        </Container>
+      </Navbar>
+    </div>
+  );
 }
+
+export default NavBar;
