@@ -10,7 +10,7 @@ This is a simple react js hooks starter project that is using Azure AD to authen
 ## Setup
 
 1. Register the app in the Azure portal. You can find those instructions here (https://docs.microsoft.com/en-us/graph/tutorials/react?tutorial-step=2)
-    a. Note where you can get the Application (client) ID because you will need that in a later step.
+    1. Note where you can get the Application (client) ID because you will need that in a later step.
 2. Clone repo.
 3. Create a new .env.local file in the root directory and populate it with the following detail.  This will be used as your local config file for react
 
@@ -35,5 +35,6 @@ This is a simple react js hooks starter project that is using Azure AD to authen
 ## Additional Info
 
 This project is using the JSONPlaceHolder API, which can be found here https://jsonplaceholder.typicode.com, to pull in random sample data to play with.  A couple of important things to note about this data source:
-    1. It's read-only.  It will provide fakes for inserts and updates, but you aren't really changing the source.  For example, if you create a new post and then try to edit that post, it will fail since the post you created was just a fake.
-    2. Actually there was only one important thing to note about using this data...
+
+1. It's read-only.  It will provide fakes for inserts and updates, but you aren't really changing the source.  For example, if you create a new post and then try to edit that post, it will fail since the post you created was just a fake.
+2. Actually there was only one important thing to note about using this data...
