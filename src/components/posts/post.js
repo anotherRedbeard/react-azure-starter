@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Table,
+import {Table, NavLink, Card, CardHeader, Row, Col, CardBody,
         ButtonGroup,
         Container } from 'reactstrap';
 import moment from 'moment';
@@ -8,7 +8,8 @@ import Loader from '../packages/loader';
 import ModalForm from '../packages/modal-form';
 import UpsertPost from './post-upsert';
 import ModalFromButton from '../packages/modal-from-button';
-import { sortArrayByProperty } from '../utils/utils';
+import { useSortableData } from '../utils/hooks/sortable-data';
+import './post.css';
 
 //Helper function to format Graph date/time
 function formatDateTime(dateTime) {
@@ -19,6 +20,14 @@ const Posts = (props) => {
     const [allPosts,setAllPosts] = useState([]);
     const [allUsers,setAllUsers] = useState([]);
     const [isLoading,setIsLoading] = useState(true);
+    const {items, requestSort, sortConfig} = useSortableData(allPosts, {key: 'id', direction: 'ascending'});
+    const getSortClassNamesFor = (name) => {
+      if (!sortConfig) {
+          return;
+      }
+
+      return sortConfig.key === name ? sortConfig.direction : undefined;
+  };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -57,14 +66,14 @@ const Posts = (props) => {
         );
       }
 
-      const postsToDisplay = sortArrayByProperty(allPosts,'title').map(item => {
+      const postsToDisplay = items.map(item => {
         return (
           <tr key={item.id}>
             <td>{item.id}</td>
             <td>{item.title}</td>
             <td>{item.body}</td>
             <td>{allUsers.find(x => x.id === parseInt(item.userId))?.name}</td>
-            <td>
+            <td className='text-center'>
               <ButtonGroup>
                 <ModalForm buttonLabel="Edit" 
                   user={props.user}
@@ -85,28 +94,36 @@ const Posts = (props) => {
 
       return (
         <div>
-          <Container fluid>
-            <div className="float-right">
-              <ModalFromButton buttonLabel="Add System" 
-                user={props.user}
-                render={(modal,toggle) => ( <UpsertPost post={newPost} users={allUsers} toggleModal={toggle} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify} addPost={addPost} />)}/>
-            </div>
-            <h3>Posts</h3>
-            <Table>
-              <thead>
-                <tr>
-                  <th scope="col">Post Id</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Body</th>
-                  <th scope="col">User</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {postsToDisplay}
-              </tbody>
-            </Table>
-          </Container>
+          <Card>
+              <CardHeader>
+                  <Row>
+                      <Col md={10}>
+                          <h4>Posts</h4>
+                      </Col>
+                      <Col md={2}>
+                      <ModalFromButton buttonLabel="Add System" 
+                          user={props.user}
+                          render={(modal,toggle) => ( <UpsertPost post={newPost} users={allUsers} toggleModal={toggle} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify} addPost={addPost} />)}/>
+                      </Col>
+                  </Row>
+              </CardHeader>
+              <CardBody>
+                <Table striped bordered hover size="sm">
+                  <thead>
+                    <tr>
+                      <th scope="col"><NavLink href='#' className={getSortClassNamesFor('id')} onClick={() => requestSort('id')}>Post Id</NavLink></th>
+                      <th scope="col"><NavLink href='#' className={getSortClassNamesFor('title')} onClick={() => requestSort('title')}>Title</NavLink></th>
+                      <th scope="col"><NavLink href='#' className={getSortClassNamesFor('body')} onClick={() => requestSort('body')}>Body</NavLink></th>
+                      <th scope="col"><NavLink href='#' className={getSortClassNamesFor('userId')} onClick={() => requestSort('userId')}>User</NavLink></th>
+                      <th scope="col"><NavLink href='#' disabled>Actions</NavLink></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {postsToDisplay}
+                  </tbody>
+                </Table>
+              </CardBody>
+          </Card>
         </div>
       );
     } else {
