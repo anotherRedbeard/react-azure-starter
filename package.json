@@ -12,6 +12,7 @@
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
+    "env-cmd": "^10.1.0",
     "moment": "^2.24.0",
     "msal": "^1.2.1",
     "react": "^16.13.0",
@@ -25,8 +26,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:sandbox": "sh -ac '. .env.sandbox; react-scripts build'",
-    "build:production": "sh -ac '. .env.production; react-scripts build'"
+    "build:sandbox": "env-cmd -f .env.local react-scripts build",
+    "build:production": "env-cmd -f .env.production react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"

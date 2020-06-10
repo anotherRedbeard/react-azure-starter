@@ -14,6 +14,7 @@ import {
   DropdownMenu,
   DropdownItem, 
   Button } from 'reactstrap';
+import config from '../utils/config';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 const UserAvatar = (props) => {
@@ -89,26 +90,27 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md" fixed="top">
-        <Container>
-          <NavbarBrand href="/">React Azure Starter</NavbarBrand>
-          <NavbarToggler onClick={toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="mr-auto" navbar>
-              <NavItem>
-                <RouterNavLink to="/" className="nav-link" exact>Home</RouterNavLink>
-              </NavItem>
-              {calendarLink}
-              {postsLink}
-            </Nav>
-            <Nav className="justify-content-end" navbar>
-              <AuthNavItem
-                isAuthenticated={props.isAuthenticated}
-                authButtonMethod={props.authButtonMethod}
-                user={props.user} />
-            </Nav>
-          </Collapse>
-        </Container>
+      <Navbar color={config.env === 'Production' ? 'custom-background' : 'sandbox'} light expand="md" fixed="top">
+        <NavbarBrand href="/">
+          <img src="/logo192.png" width="30" height="30" className="d-inline-block align-top" alt="React logo"/>
+        </NavbarBrand>
+        <NavbarBrand href="/">React Azure Starter{config.env !== 'Production' ? ' - ' + config.env:''}</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <RouterNavLink to="/" className="nav-link" exact>Home</RouterNavLink>
+            </NavItem>
+            {calendarLink}
+            {postsLink}
+          </Nav>
+          <Nav className="justify-content-end" navbar>
+            <AuthNavItem
+              isAuthenticated={props.isAuthenticated}
+              authButtonMethod={props.authButtonMethod}
+              user={props.user} />
+          </Nav>
+        </Collapse>
       </Navbar>
     </div>
   );

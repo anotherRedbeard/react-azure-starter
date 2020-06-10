@@ -7,3 +7,14 @@ body {
   word-break: break-all;
   white-space: pre-wrap;
 }
+
+/*custom background for the navbar*/
+.bg-custom-background {
+  background-color: seagreen;
+}
+.bg-local {
+  background-color: lightskyblue;
+}
+.bg-sandbox {
+  background-color: lightcoral;
+}

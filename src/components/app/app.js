@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Container, Alert } from 'reactstrap';
 import NavBar from '../packages/navbar';
 import NotifyUser from '../packages/notify-user';
 import Welcome from '../welcome/welcome';

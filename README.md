@@ -32,6 +32,14 @@ This is a simple react js hooks starter project that is using Azure AD to authen
 
 5. Login and start clicking
 
+## Features
+
+- AzureAD for Auth
+- Sortable data hook
+- Working example of multi-environment setup using .env.* files and env-cmd npm package.
+  - For more info on this go here https://medium.com/@rishi.vedpathak/react-environment-specific-builds-using-env-with-cra-and-env-cmd-5960a1253fe6
+  - It also changes the color of the navbar depending on the environment you are using
+
 ## Additional Info
 
 This project is using the JSONPlaceHolder API, which can be found here https://jsonplaceholder.typicode.com, to pull in random sample data to play with.  A couple of important things to note about this data source:
