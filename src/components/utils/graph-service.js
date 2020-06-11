@@ -32,13 +32,15 @@ export async function getUserPhoto(accessToken) {
 
   //get image as raw type so you can convert to base64 string
   const response = await client.api('/me/photos(\'48x48\')/$value').responseType('raw').get();
-
-  //convert arrayBuffer to base 64 string
-  var buffer = await response.arrayBuffer();
-  var base64Flag = 'data:image/jpeg;base64,';
-  var imageStr = arrayBufferToBase64(buffer);
-
-  return base64Flag+imageStr;
+  if (response.ok) {
+    //convert arrayBuffer to base 64 string
+    var buffer = await response.arrayBuffer();
+    var base64Flag = 'data:image/jpeg;base64,';
+    var imageStr = arrayBufferToBase64(buffer);
+    return base64Flag+imageStr;
+  } else {
+    return null;
+  }
 }
 
 export async function getEvents(accessToken) {

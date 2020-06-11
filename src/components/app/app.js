@@ -100,7 +100,7 @@ class App extends Component {
 
       if (accessToken) {
         var [user, photo, userGroups] = await Promise.all([ getUserDetails(accessToken), getUserPhoto(accessToken), getUserGroups(accessToken)]);
-
+        
         var isUserAdmin = this.isUserInAdminRole(userGroups.value);
         this.setState({
           isAuthenticated: true,

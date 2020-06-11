@@ -23,13 +23,13 @@ const UserAvatar = (props) => {
     return <img
             src={props.user.avatar} alt="user"
             className="rounded-circle align-self-center mr-2"
-            style={{width: '32px'}}></img>;
+            style={props.style}></img>;
   }
 
   // No avatar available, return a default icon
   return <i
           className="far fa-user-circle fa-lg rounded-circle align-self-center mr-2"
-          style={{width: '32px'}}></i>;
+          style={props.style}></i>;
 }
 
 const AuthNavItem = (props) => {
@@ -39,11 +39,11 @@ const AuthNavItem = (props) => {
     return (
       <UncontrolledDropdown>
         <DropdownToggle nav caret>
-          <UserAvatar user={props.user}/>
+          <UserAvatar user={props.user} style={{width: '32px'}}/>
         </DropdownToggle>
         <DropdownMenu>
           <div className='text-center'>
-            <img src={props.user.avatar} alt="user" className="rounded-circle align-self-center mr-2" style={{width: '80px', marginTop: '10px'}}></img>
+            <UserAvatar user={props.user} style={{width: '80px', marginTop: '10px'}}/>
             <h5 className="dropdown-item-text mb-0" style={{marginTop: '25px'}}>{props.user.displayName}</h5>
             <p className="dropdown-item-text text-muted mb-0">{props.user.email}</p>
           </div>
