@@ -21,3 +21,20 @@ export function sortArrayByDirection(array, sortConfig) {
         return 0;
     });
 }
+
+export function parseError(err) {
+    var retError;
+    if (typeof(err) === 'string') {
+        var errParts = err.split('|');
+        retError = errParts.length > 1 ?
+          { message: errParts[1], debug: errParts[0] } :
+          { message: err };
+    } else {
+        retError = {
+            message: err.message,
+            debug: JSON.stringify(err)
+        };
+    }
+
+    return retError;
+}

@@ -1,8 +1,10 @@
-import React from 'react';
-import { UncontrolledAlert } from 'reactstrap';
+import React, {useState, useEffect} from 'react';
+import { Alert } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function NotifyUser(props) {
+    const onDismiss = () => props.setShowNotify(false);
+
     let icon = 'info-circle';
 
     switch(props.reactstrapColor) {
@@ -27,8 +29,8 @@ export default function NotifyUser(props) {
         debug = <div><FontAwesomeIcon icon={icon} /> {props.message}</div>;
     }
     return (
-        <UncontrolledAlert color={props.reactstrapColor}>
+        <Alert isOpen={props.showNotify} toggle={onDismiss} color={props.reactstrapColor}>
             {debug}
-        </UncontrolledAlert>
+        </Alert>
     )
 }

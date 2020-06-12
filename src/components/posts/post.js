@@ -27,9 +27,10 @@ const Posts = (props) => {
       }
 
       return sortConfig.key === name ? sortConfig.direction : undefined;
-  };
+    };
 
     useEffect(() => {
+      console.log('useEffect post');
         const fetchData = async () => {
             try {
                 if (props.isAuthenticated) {
@@ -40,6 +41,7 @@ const Posts = (props) => {
                   setAllUsers(users);
                   setIsLoading(false);
                 } else {
+              console.log('where here post??',props.isAuthenticated);
                     props.showNotify('danger', 'User not Authenticated', 'Please sign in to view this page')
                 }
             }
@@ -48,7 +50,7 @@ const Posts = (props) => {
             }
         }
         fetchData();
-    }, []);
+    }, [props.isAuthenticated]);
 
     const editPost = (post) => {
       setAllPosts(allPosts.map(item => (item.id === post.id ? post : item)));

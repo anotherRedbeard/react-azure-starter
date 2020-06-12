@@ -45,6 +45,13 @@ This is a simple react js hooks starter project that is using Azure AD to authen
 - One of the problems you may run into is with granting admin permission.  The following is a great summary of the AADSTS90094 error and how to fix it.  The problem that is a little but under emphasized is that the Scopes must match exactly.  So if you have an additional scope you are requesting and it was not added to your app registration you will get misleading errors.
   - <https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/56b53ce7-f14c-4ddf-a0d0-569a12717487/isMSAApp/>
   - As pointed out by the first comment in the post above, if your enterprise has turned off 'Users can consent to apps access company data on their behalf' then everything will require admin consent.
+- This repo is setup to run in vscode on a Mac using the bash shell, if you need to run on Windows using PowerShell you will need to change the package.json to something like this for the start script:
+
+  ```json
+  "scripts": {
+    "start": "set PORT=3000 && react-scripts start"
+  }
+  ```
 
 ## Additional Info
 
