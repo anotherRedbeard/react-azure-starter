@@ -39,6 +39,8 @@ This is a simple react js hooks starter project that is using Azure AD to authen
 - Working example of multi-environment setup using .env.* files and env-cmd npm package.
   - For more info on this go here <https://medium.com/@rishi.vedpathak/react-environment-specific-builds-using-env-with-cra-and-env-cmd-5960a1253fe6>
   - It also changes the color of the navbar depending on the environment you are using
+- react-table with sorting and pagination example
+  - For more info on react-table please visit <https://github.com/tannerlinsley/react-table>
 
 ## Troubleshooting
 

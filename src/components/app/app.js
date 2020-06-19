@@ -11,6 +11,7 @@ import { UserAgentApplication } from 'msal';
 import { getUserDetails, getUserPhoto, getUserGroups } from '../utils/graph-service';
 import Calendar from '../calendar/calendar';
 import Posts from '../posts/post';
+import ReactTableExample from '../react-table-example/react-table-example';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import msalApp from '../utils/auth-utils';
@@ -171,6 +172,9 @@ const App = (props) => {
           } />
           <Route exact path="/posts" render={(props) => 
             <Posts {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
+          } />
+          <Route exact path="/reacttableexample" render={(props) => 
+            <ReactTableExample {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
           } />
         </Container>
       </div>

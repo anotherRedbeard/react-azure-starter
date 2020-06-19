@@ -75,6 +75,7 @@ const NavBar = (props) => {
   // Only following nav item if logged in
   let calendarLink = null;
   let postsLink = null;
+  let reactTableLink = null;
   if (props.isAuthenticated) {
     calendarLink = (
       <NavItem>
@@ -84,6 +85,11 @@ const NavBar = (props) => {
     postsLink = (
       <NavItem>
         <RouterNavLink to="/posts" className="nav-link" exact>Posts</RouterNavLink>
+      </NavItem>
+    );
+    reactTableLink = (
+      <NavItem>
+        <RouterNavLink to="/reacttableexample" className="nav-link" exact>React Table</RouterNavLink>
       </NavItem>
     );
   }
@@ -103,6 +109,7 @@ const NavBar = (props) => {
             </NavItem>
             {calendarLink}
             {postsLink}
+            {reactTableLink}
           </Nav>
           <Nav className="justify-content-end" navbar>
             <AuthNavItem
