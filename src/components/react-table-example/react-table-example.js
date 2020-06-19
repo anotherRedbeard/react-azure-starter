@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from 'react'
 import {Table, NavLink, Card, CardHeader, Row, Col, CardBody,
-        ButtonGroup, Pagination, PaginationItem, PaginationLink,
+        Button, Pagination, PaginationItem, PaginationLink,
         Container, Input, Form, FormGroup, Label } from 'reactstrap';
 import { useTable, usePagination, useSortBy, useRowSelect } from 'react-table'
 import ExportCSV from '../utils/export-csv';
@@ -180,6 +180,12 @@ function ReactTableExample() {
             accessor: 'progress',
             collapse: false,
           },
+          {
+            Header: 'Action',
+            Cell: ({ cell })  => (
+                <Button color='primary' onClick={buttonClick}>{cell.row.values.firstName}</Button>
+            )
+        }
         ],
       },
     ],
@@ -214,6 +220,10 @@ function ReactTableExample() {
         });
         setFilteredData(filteredData);
     };
+
+    const buttonClick = (value) => {
+        window.alert('you clicked something ' + value);
+    }
 
 
   return <TableExample columns={columns} data={filteredData} handleChange={handleChange} />
