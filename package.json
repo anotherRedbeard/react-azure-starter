@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
     "env-cmd": "^10.1.0",
+    "file-saver": "^2.0.2",
     "jquery": "^3.5.1",
     "moment": "^2.24.0",
     "msal": "^1.2.1",
@@ -23,7 +24,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-table": "^7.2.0",
-    "reactstrap": "^8.4.1"
+    "reactstrap": "^8.4.1",
+    "xlsx": "^0.16.2"
   },
   "scripts": {
     "start": "PORT=3000 react-scripts start",

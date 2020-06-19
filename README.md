@@ -41,6 +41,9 @@ This is a simple react js hooks starter project that is using Azure AD to authen
   - It also changes the color of the navbar depending on the environment you are using
 - react-table with sorting and pagination example
   - For more info on react-table please visit <https://github.com/tannerlinsley/react-table>
+- Export to excel using the following libraries
+  - file-saver <https://www.npmjs.com/package/file-saver>
+  - xlsx <https://github.com/eligrey/FileSaver.js>
 
 ## Troubleshooting
 

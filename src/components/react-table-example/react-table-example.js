@@ -3,6 +3,7 @@ import {Table, NavLink, Card, CardHeader, Row, Col, CardBody,
         ButtonGroup, Pagination, PaginationItem, PaginationLink,
         Container, Input, Form, FormGroup, Label } from 'reactstrap';
 import { useTable, usePagination, useSortBy, useRowSelect } from 'react-table'
+import ExportCSV from '../utils/export-csv';
 
 import makeData from './makeData'
 
@@ -46,7 +47,7 @@ function TableExample({ columns, data, handleChange }) {
                 <h1>Example of react-table</h1>
             </Row>
             <Row>
-                <Col xs={9}>
+                <Col xs={7}>
                     <Form inline>
                         <FormGroup>
                             <Input style={{marginRight: '5px'}} type="select" name="pageSize" id="pageSize" onChange={e => { setPageSize(Number(e.target.value)) }} value={pageSize}>
@@ -60,6 +61,11 @@ function TableExample({ columns, data, handleChange }) {
                 </Col>
                 <Col xs={3}>
                     <Input type="input" name="searchText" id="searchText" onChange={handleChange} placeholder='Search'></Input>
+                </Col>
+                <Col xs={2}>
+                    <div className='float-right'>
+                        <ExportCSV csvData={data} fileName='Gnosis-Export'></ExportCSV>
+                    </div>
                 </Col>
             </Row>
             <Row>
