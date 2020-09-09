@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'reactstrap';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ExportCSV = ({csvData, fileName}) => {
 
@@ -23,7 +24,7 @@ const ExportCSV = ({csvData, fileName}) => {
     }
 
     return (
-        <Button color="success" onClick={(e) => exportToCSV(csvData,fileName)}>Export to Excel</Button>
+        <Button color="success" onClick={(e) => exportToCSV(csvData,fileName)}><FontAwesomeIcon icon='download'></FontAwesomeIcon></Button>
     )
 };
 

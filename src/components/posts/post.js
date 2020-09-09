@@ -103,7 +103,7 @@ const Posts = (props) => {
                           <h4>Posts</h4>
                       </Col>
                       <Col md={2}>
-                      <ModalFromButton buttonLabel="Add System" 
+                      <ModalFromButton buttonLabel="Add Post" 
                           user={props.user}
                           render={(modal,toggle) => ( <UpsertPost post={newPost} users={allUsers} toggleModal={toggle} isAuthenticated={props.isAuthenticated} showNotify={props.showNotify} addPost={addPost} />)}/>
                       </Col>
