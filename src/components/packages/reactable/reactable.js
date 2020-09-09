@@ -1,12 +1,9 @@
 import React, {Fragment, useState, useMemo} from 'react'
 import {Table, ButtonGroup, InputGroup, InputGroupAddon, Row, Col, InputGroupText,
-        Button, Pagination, PaginationItem, PaginationLink,
-        Container, Input, Form, FormGroup, Label } from 'reactstrap';
-import { useTable, usePagination, useSortBy, useRowSelect } from 'react-table'
+        Button, Input } from 'reactstrap';
+import { useTable, usePagination, useSortBy } from 'react-table'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ExportCSV from '../../utils/export-csv';
 
-import makeData from '../../react-table-example/makeData'
 import './reactable.css'
 
 function TableUI({ columns, data, enablePaging, initialPageSize, getRowProps }) {

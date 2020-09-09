@@ -4,7 +4,7 @@ import moment from 'moment';
 import config from '../utils/config';
 import { getEvents } from '../utils/graph-service';
 import Reactable from '../packages/reactable/reactable';
-import makeData from './makeData'
+import makeData from '../utils/makeData'
 import ExportCSV from '../utils/export-csv';
 
 //Helper function to format Graph date/time

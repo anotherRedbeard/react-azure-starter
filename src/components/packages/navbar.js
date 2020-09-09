@@ -76,6 +76,7 @@ const NavBar = (props) => {
   let calendarLink = null;
   let postsLink = null;
   let reactTableLink = null;
+  let tagLink = null;
   if (props.isAuthenticated) {
     calendarLink = (
       <NavItem>
@@ -89,7 +90,12 @@ const NavBar = (props) => {
     );
     reactTableLink = (
       <NavItem>
-        <RouterNavLink to="/reacttableexample" className="nav-link" exact>React Table</RouterNavLink>
+        <RouterNavLink to="/reacttableexample" className="nav-link" exact>Reactable</RouterNavLink>
+      </NavItem>
+    );
+    tagLink = (
+      <NavItem>
+        <RouterNavLink to="/tag" className="nav-link" exact>Tags</RouterNavLink>
       </NavItem>
     );
   }
@@ -110,6 +116,7 @@ const NavBar = (props) => {
             {calendarLink}
             {postsLink}
             {reactTableLink}
+            {tagLink}
           </Nav>
           <Nav className="justify-content-end" navbar>
             <AuthNavItem

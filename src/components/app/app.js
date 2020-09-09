@@ -13,10 +13,11 @@ import Calendar from '../calendar/calendar';
 import Posts from '../posts/post';
 import ReactTable from '../react-table-example/react-table';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload, faTimes } from '@fortawesome/free-solid-svg-icons'
 import msalApp from '../utils/auth-utils';
+import TagInputDisplay from '../tag-input-example/tag-input-display';
 
-library.add(faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload);
+library.add(faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload, faTimes);
 
 const App = (props) => {
     let userAcct = msalApp.getAccount();
@@ -175,6 +176,9 @@ const App = (props) => {
           } />
           <Route exact path="/reacttableexample" render={(props) => 
             <ReactTable {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
+          } />
+          <Route exact path="/tag" render={(props) => 
+            <TagInputDisplay {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
           } />
         </Container>
       </div>
