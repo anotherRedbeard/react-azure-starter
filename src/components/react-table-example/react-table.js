@@ -13,6 +13,7 @@ function formatDateTime(dateTime) {
 }
 
 const ReactTable = (props) => {
+    const {showNotify} = props;
     const [events, setEvents] = useState([]);
     const columns = [
         {
@@ -93,7 +94,7 @@ const ReactTable = (props) => {
     };
 
     const buttonClick = (value) => {
-        window.alert('you clicked something ' + value);
+        showNotify('success', 'You Clicked A Button', 'Here is the value:  ' + value);
     }
 
     const onSelect = (value) => {

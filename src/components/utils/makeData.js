@@ -18,10 +18,10 @@ const newPerson = () => {
     progress: Math.floor(Math.random() * 100),
     status:
       statusChance > 0.66
-        ? 'relationship'
+        ? 'well'
         : statusChance > 0.33
-        ? 'complicated'
-        : 'single',
+        ? 'good'
+        : 'fair',
   }
 }
 

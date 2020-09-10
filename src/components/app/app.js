@@ -13,11 +13,12 @@ import Calendar from '../calendar/calendar';
 import Posts from '../posts/post';
 import ReactTable from '../react-table-example/react-table';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons'
 import msalApp from '../utils/auth-utils';
 import TagInputDisplay from '../tag-input-example/tag-input-display';
+import ListGroupExample from '../list-group-example/list-group-example';
 
-library.add(faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload, faTimes);
+library.add(faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload, faTimes, faSearch);
 
 const App = (props) => {
     let userAcct = msalApp.getAccount();
@@ -179,6 +180,9 @@ const App = (props) => {
           } />
           <Route exact path="/tag" render={(props) => 
             <TagInputDisplay {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
+          } />
+          <Route exact path="/listgroups" render={(props) => 
+            <ListGroupExample {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
           } />
         </Container>
       </div>

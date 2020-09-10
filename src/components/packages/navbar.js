@@ -77,6 +77,7 @@ const NavBar = (props) => {
   let postsLink = null;
   let reactTableLink = null;
   let tagLink = null;
+  let listGroupLink = null;
   if (props.isAuthenticated) {
     calendarLink = (
       <NavItem>
@@ -98,6 +99,11 @@ const NavBar = (props) => {
         <RouterNavLink to="/tag" className="nav-link" exact>Tags</RouterNavLink>
       </NavItem>
     );
+    listGroupLink = (
+      <NavItem>
+        <RouterNavLink to="/listgroups" className="nav-link" exact>List Groups</RouterNavLink>
+      </NavItem>
+    );
   }
 
   return (
@@ -117,6 +123,7 @@ const NavBar = (props) => {
             {postsLink}
             {reactTableLink}
             {tagLink}
+            {listGroupLink}
           </Nav>
           <Nav className="justify-content-end" navbar>
             <AuthNavItem

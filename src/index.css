@@ -46,3 +46,17 @@ thead span.descending::after {
   font-weight: 900;
   margin-left: .5em;
 }
+
+/*add styling for group icon inside input*/
+.input-icon-group {
+  position: relative;
+}
+.input-icon-group .input-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+}
+.input-icon-group.input {
+  padding-left: 35px;
+}
