@@ -6,6 +6,7 @@ This is a simple react js hooks starter project that is using Azure AD to authen
 
 1. Access to an azure subscription where you can create an app registration.  You can go here (<https://azure.microsoft.com/en-us/free/>) to sign-up for an account that is free for the first 12 months.
 2. Office 365 tenant that is connected to your Azure subscription.
+3. To enable the logging to Azure App Insights, you will need to create an App Insights resource in your azure subscription.  For help getting that created you can go here (<https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource>)
 
 ## Setup
 
@@ -20,6 +21,8 @@ This is a simple react js hooks starter project that is using Azure AD to authen
     REACT_APP_AUTHORITY=https://login.microsoftonline.com/{Azure tenant id that will match the tenant you created the app registration in}
     REACT_APP_REDIRECT_URL=http://localhost:3000
     REACT_APP_API_BASE_URL=https://jsonplaceholder.typicode.com/
+    REACT_APP_ENV=Local
+    REACT_APP_INSIGHTS_KEY={Application Insights key from resource created above}
 
     ```
 
@@ -47,6 +50,22 @@ This is a simple react js hooks starter project that is using Azure AD to authen
 - Export to excel using the following libraries
   - file-saver <https://www.npmjs.com/package/file-saver>
   - xlsx <https://github.com/eligrey/FileSaver.js>
+- Logging to Application Insights
+  - This is what all I had to do to get this app logging to Application Insights
+    - Add the npm modules
+
+    ```bash
+      $npm install @microsoft/applicationinsights-react-js
+      $npm install @microsoft/applicationinsights-web
+    ```
+
+    - Create the src/components/utils/telemetry-provider.js and src/components/utils/telemtry-provider.js (HOC) files.  
+      - Most of this code can be found in the application-insights-react-demo repo (<https://github.com/Azure-Samples/application-insights-react-demo>)
+    - Update your code to start logging events (these example are in app.js), use the TelemetryProvider component after the Router to capture navigation events.  This also gives the app.js access to log other events using the API.
+      - More info on logging events using the API can be found here: <https://docs.microsoft.com/en-gb/azure/azure-monitor/app/api-custom-events-metrics?WT.mc_id=aaronpowell-blog-aapowell&irgwc=1&OCID=AID2000142_aff_7593_1243925&tduid=%28ir__e6ts6myyd0kfthyjkk0sohzgc32xirn0061pfj9f00%29%287593%29%281243925%29%28je6NUbpObpQ-dNO1N1rktty5Y2xs7Nr9Iw%29%28%29&irclickid=_e6ts6myyd0kfthyjkk0sohzgc32xirn0061pfj9f00#page-views>
+  - For more information on this you can go here <https://docs.microsoft.com/en-us/azure/azure-monitor/app/javascript-react-plugin>
+  
+
 
 ## Troubleshooting
 

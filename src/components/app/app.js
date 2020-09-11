@@ -17,11 +17,14 @@ import { faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faA
 import msalApp from '../utils/auth-utils';
 import TagInputDisplay from '../tag-input-example/tag-input-display';
 import ListGroupExample from '../list-group-example/list-group-example';
+import { getAppInsights, ai } from '../utils/telemetry-service';
+import TelemetryProvider from '../utils/telemetry-provider';
 
 library.add(faCheckCircle, faQuestionCircle, faExclamationCircle, faInfoCircle, faAngleDoubleRight, faAngleDoubleLeft, faAngleRight, faAngleLeft, faDownload, faTimes, faSearch);
 
 const App = (props) => {
     let userAcct = msalApp.getAccount();
+    let appInsights = getAppInsights();
 
     const [userAgentApplication,setUserAgentApplication] = useState(msalApp);
     const [isAuthenticated,setIsAuthenticated] = useState(userAcct !== null);
@@ -132,6 +135,10 @@ const App = (props) => {
             avatar: photo,
             isAdmin: isUserAdmin
           });
+        
+        //need to create temp variable to set the trackEvent object properly, it won't accept user.userPrincipalName
+        var userPrincipalName = user.userPrincipalName;
+        appInsights.trackEvent({name: 'User Login', properties: {userPrincipalName} });
         setError(null);
       }
     }
@@ -159,33 +166,35 @@ const App = (props) => {
 
   return (
     <Router>
-      <div>
-        <NavBar
-          isAuthenticated={isAuthenticated}
-          authButtonMethod={isAuthenticated ? logout.bind(this) : login.bind(this)}
-          user={user}/>
-        <Container>
-          <NotifyUser showNotify={showNotify} setShowNotify={setShowNotify} message={notify.message} reactstrapColor={notify.color} debug={notify.debug} />
-          <Route exact path="/" render={(props) => 
-            <Welcome {...props} isAuthenticated={isAuthenticated} user={user} authButtonMethod={login.bind(this)} /> 
-          } />
-          <Route exact path="/calendar" render={(props) => 
-            <Calendar {...props} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} /> 
-          } />
-          <Route exact path="/posts" render={(props) => 
-            <Posts {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
-          } />
-          <Route exact path="/reacttableexample" render={(props) => 
-            <ReactTable {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
-          } />
-          <Route exact path="/tag" render={(props) => 
-            <TagInputDisplay {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
-          } />
-          <Route exact path="/listgroups" render={(props) => 
-            <ListGroupExample {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
-          } />
-        </Container>
-      </div>
+      <TelemetryProvider instrumentationKey={config.aiInstrumentationKey} after={() => {appInsights = getAppInsights()}}>
+        <div>
+          <NavBar
+            isAuthenticated={isAuthenticated}
+            authButtonMethod={isAuthenticated ? logout.bind(this) : login.bind(this)}
+            user={user}/>
+          <Container>
+            <NotifyUser showNotify={showNotify} setShowNotify={setShowNotify} message={notify.message} reactstrapColor={notify.color} debug={notify.debug} />
+            <Route exact path="/" render={(props) => 
+              <Welcome {...props} isAuthenticated={isAuthenticated} user={user} authButtonMethod={login.bind(this)} /> 
+            } />
+            <Route exact path="/calendar" render={(props) => 
+              <Calendar {...props} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} /> 
+            } />
+            <Route exact path="/posts" render={(props) => 
+              <Posts {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
+            } />
+            <Route exact path="/reacttableexample" render={(props) => 
+              <ReactTable {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
+            } />
+            <Route exact path="/tag" render={(props) => 
+              <TagInputDisplay {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
+            } />
+            <Route exact path="/listgroups" render={(props) => 
+              <ListGroupExample {...props} user={user} isAuthenticated={isAuthenticated} showNotify={setNotifyMessage.bind(this)} />
+            } />
+          </Container>
+        </div>
+      </TelemetryProvider>
     </Router>
   )
 
