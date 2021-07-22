@@ -27,7 +27,7 @@
     "react-scripts": "^3.4.3",
     "react-table": "^7.5.0",
     "reactstrap": "^8.5.1",
-    "xlsx": "^0.16.7"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "PORT=3000 react-scripts start",
